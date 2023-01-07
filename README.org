@@ -1,0 +1,30 @@
+#+TITLE: Stack for hosted services run from linode
+
+* What lives here
+- This is a collection of things which, for one reason or another, I didn't want to host locally on my unraid server
+  - These are mostly things that I don't want to go down, that monitor other services uptime, just seemed too small for a heavy solution like unraid, or that I want the option to troubleshoot remotely if a tree hits a powerline at home while I'm out
+
+* Blog
+- In order for hugo to run, you'll need to clone a theme into the blog/themes folder
+  - I'm using the [[https://github.com/panr/hugo-theme-terminal][Hugo Terminal Theme]]
+    - *Make sure* that all your files get cloned into e.g. `blog/themes/terminal` and not one folder deeper or it won't work
+  - Once the theme is cloned in, follow the instructions for your theme as to what needs to go in the top level config.toml file
+  - Once everything is running, all your posts should be able to go to blog/content/posts
+** TODO how to store posts in a separate repo? Or maybe ox-hugo lets me store them in an org directory
+** TODO Ox-Hugo
+** TODO org-roam wiki export? Maybe in another container with the org roam visualizer
+
+* TTYD
+** TODO find a way to get my custom programs cloned in here and updated remotely
+
+* NginxProxyManager
+** Initial Setup
+- Default user: admin@example.com
+- Default password: Changeme
+** TODO Managing SSL
+
+* Agate
+** TODO figure out SSL/TLS
+
+* Radicale
+** TODO learn to use this

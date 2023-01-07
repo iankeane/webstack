@@ -1,0 +1,80 @@
+version: '3.7'
+
+services:
+
+  ttyd:
+    image: ttyd:latest
+    restart: unless-stopped
+    build:
+      context: ./ttyd
+      dockerfile: Dockerfile
+    environment:
+      - SOME_ENV:"value"
+    ports:
+      - 8080:8080
+    networks:
+      web-stack:
+        aliases:
+          - "ttyd.local"
+  proxy:
+    image: jc21/nginx-proxy-manager:latest
+    restart: unless-stopped
+    ports:
+      - '80:80'
+      - '81:81'
+      - '443:443'
+    volumes:
+      - ./proxy/data:/data
+      - ./proxy/letsencrypt:/etc/letsencrypt
+    networks:
+      web-stack:
+        aliases:
+          - "proxy.local"
+
+  agate:
+    image: snowgoons/agate
+    restart: unless-stopped
+    ports:
+      - '1965:1965'
+    volumes:
+      - ./proxy/data:/data
+      - ./proxy/letsencrypt:/etc/letsencrypt
+    networks:
+      web-stack:
+        aliases:
+          - "agate.local"
+
+  blog:
+    image: klakegg/hugo:0.101.0
+    command: server
+    restart: unless-stopped
+    ports:
+      - '1313:1313'
+    volumes:
+      - ./blog:/src
+    networks:
+      web-stack:
+        aliases:
+          - "blog.local"
+
+  cal:
+    image: tomsquest/docker-radicale
+    ports:
+      - 5232:5232
+    init: true
+    read_only: true
+    healthcheck:
+      test: curl -f http://127.0.0.1:5232 || exit 1
+      interval: 30s
+      retries: 3
+    restart: unless-stopped
+    volumes:
+      - ./cal/data:/data
+    networks:
+      web-stack:
+        aliases:
+          - "cal.local"
+
+networks:
+  web-stack:
+    driver: 'bridge'
