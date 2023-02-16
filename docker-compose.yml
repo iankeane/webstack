@@ -1,9 +1,11 @@
+---
 version: '3.7'
 
 services:
 
   ttyd:
     image: ttyd:latest
+    container_name: ttyd
     restart: unless-stopped
     build:
       context: ./ttyd
@@ -19,6 +21,7 @@ services:
   proxy:
     image: jc21/nginx-proxy-manager:latest
     restart: unless-stopped
+    container_name: proxy
     ports:
       - '80:80'
       - '81:81'
@@ -33,6 +36,7 @@ services:
 
   agate:
     image: snowgoons/agate
+    container_name: agate
     restart: unless-stopped
     ports:
       - '1965:1965'
@@ -46,12 +50,17 @@ services:
 
   blog:
     image: klakegg/hugo:0.101.0
+    container_name: blog
     command: server
     restart: unless-stopped
+    build:
+      context: ./blog
+      dockerfile: Dockerfile
     ports:
       - '1313:1313'
     volumes:
-      - ./blog:/src
+      - ./blog/resources:/src/resources
+      - ./blog/content:/src/content
     networks:
       web-stack:
         aliases:
@@ -59,6 +68,7 @@ services:
 
   cal:
     image: tomsquest/docker-radicale
+    container_name: cal
     ports:
       - 5232:5232
     init: true
@@ -74,6 +84,17 @@ services:
       web-stack:
         aliases:
           - "cal.local"
+
+  logseq:
+    image: ghcr.io/logseq/logseq-webapp:latest
+    container_name: logseq
+    restart: unless-stopped
+    ports:
+      - 3001:80
+    networks:
+      web-stack:
+        aliases:
+          - "logseq.local"
 
 networks:
   web-stack:

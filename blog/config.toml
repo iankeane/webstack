@@ -13,7 +13,7 @@ paginate = 5
   themeColor = "orange"
 
   # if you set this to 0, only submenu trigger will be visible
-  showMenuItems = 4
+  showMenuItems = 3
 
   # show selector to switch language
   showLanguageSelector = false
@@ -34,7 +34,7 @@ paginate = 5
   showLastUpdated = false
 
   # set a custom favicon (default is a `themeColor` square)
-  # favicon = "favicon.ico"
+  favicon = "resources/favicon.ico"
 
   # Provide a string as a prefix for the last update date. By default, it looks like this: 2020-xx-xx [Updated: 2020-xx-xx] :: Author
   # updatedDatePrefix = "Updated"
@@ -86,18 +86,32 @@ paginate = 5
         identifier = "about"
         name = "About"
         url = "/about"
+        weight = 1
       [[languages.en.menu.main]]
-        identifier = "showcase"
-        name = "Showcase"
-        url = "/showcase"
+        identifier = "notes"
+        name = "Notes"
+        url = "/notes"
+        weight = 2
       [[languages.en.menu.main]]
-        identifier = "other"
-        name = "Other"
-        url = "/other"
+        identifier = "git"
+        name = "Git"
+        url = "/git"
+        weight = 3
       [[languages.en.menu.main]]
-        identifier = "wiki"
-        name = "Wiki"
-        url = "/wiki"
+        identifier = "movies"
+        name = "Movies"
+        url = "/movies"
+        weight = 4
+      [[languages.en.menu.main]]
+        identifier = "ferments"
+        name = "Ferments"
+        url = "/ferments"
+        weight = 5
+      [[languages.en.menu.main]]
+        identifier = "rss"
+        name = "RSS"
+        url = "/posts/index.xml"
+        weight = 5
 
 
 [module]
